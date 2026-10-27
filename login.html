@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Employee Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="auth-card">
+    <h1>Employee Portal</h1>
+
+    <form id="loginForm">
+      <label for="email">Employee/Admin email</label>
+      <input id="email" type="email" required>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" required minlength="8">
+
+      <button type="submit">Sign in</button>
+    </form>
+
+    <p><a href="forgot-password.html">Forgot password?</a></p>
+    <p id="message" role="status"></p>
+  </main>
+
+  <script type="module">
+    import { login } from "./auth.js";
+
+    document.getElementById("loginForm")
+      .addEventListener("submit", async event => {
+        event.preventDefault();
+
+        const message = document.getElementById("message");
+        message.textContent = "Signing in...";
+
+        try {
+          await login(
+            document.getElementById("email").value.trim(),
+            document.getElementById("password").value
+          );
+        } catch {
+          message.textContent =
+            "Login failed. Check your details or contact the administrator.";
+        }
+      });
+  </script>
+</body>
+</html>
